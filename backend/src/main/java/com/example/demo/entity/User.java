@@ -1,13 +1,18 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_user")
@@ -22,6 +27,10 @@ public class User implements Serializable{
 	private String lastName;
 	private String email;
 	private String password;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private List<Task> task = new ArrayList<>();
 	
 	private User() {
 		
@@ -72,8 +81,6 @@ public class User implements Serializable{
 			this.password = password;
 			return this;
 		}
-		
-		
 
 		public User createUser() {
 			return new User(id, name, lastName, email, password);
@@ -119,6 +126,10 @@ public class User implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Task> getTask() {
+		return task;
 	}
 
 	@Override

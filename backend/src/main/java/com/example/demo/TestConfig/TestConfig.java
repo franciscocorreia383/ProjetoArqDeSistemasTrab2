@@ -7,7 +7,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.example.demo.entity.Task;
 import com.example.demo.entity.User;
+import com.example.demo.repositories.TaskRepository;
 import com.example.demo.repositories.UserRepository;
 
 @Configuration
@@ -17,6 +19,9 @@ public class TestConfig implements CommandLineRunner{
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private TaskRepository taskRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -25,6 +30,10 @@ public class TestConfig implements CommandLineRunner{
 		
 		userRepository.saveAll(Arrays.asList(u,x));
 		
+		Task a = new Task.TaskBuilder().id(null).description("Compras").checked(false).user(u).createTask();
+		Task b = new Task.TaskBuilder().id(null).description("Trabalho av2").checked(false).user(x).createTask();
+		
+		taskRepository.saveAll(Arrays.asList(a,b));
 	}
 
 	
